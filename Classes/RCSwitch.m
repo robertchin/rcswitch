@@ -33,9 +33,10 @@
 - (void)initCommon
 {
 	self.contentMode = UIViewContentModeRedraw;
-	[self setKnobWidth:44];
+	[self setKnobWidth:30];
 	[self regenerateImages];
-	sliderOff = [[[UIImage imageNamed:@"btn_slider_off.png"] stretchableImageWithLeftCapWidth:10.0
+    drawHeight = 28;
+	sliderOff = [[[UIImage imageNamed:@"btn_slider_off.png"] stretchableImageWithLeftCapWidth:20.0
 																				 topCapHeight:0.0] retain];
 	self.opaque = NO;
 }
@@ -43,7 +44,7 @@
 - (id)initWithFrame:(CGRect)aRect
 {
 	if((self = [super initWithFrame:aRect])){
-		[self initCommon];
+        [self initCommon];
 	}
 	return self;
 }
@@ -51,9 +52,8 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	if((self = [super initWithCoder:aDecoder])){
-		[self initCommon];
 		percent = 1.0;
-		
+        [self initCommon];
 	}
 	return self;
 }
@@ -77,7 +77,7 @@
 		UIImage *knobImageStretch = [knobTmpImage stretchableImageWithLeftCapWidth:knobTmpImage.size.width / 2.0
 																	  topCapHeight:0.0];
 		CGRect knobRect = CGRectMake(0, 0, knobWidth, [knobImageStretch size].height);
-		UIGraphicsBeginImageContext(knobRect.size);
+		UIGraphicsBeginImageContextWithOptions(knobRect.size, NO, [knobTmpImage scale]);
 		[knobImageStretch drawInRect:knobRect];
 		[knobImage release];
 		knobImage = [UIGraphicsGetImageFromCurrentImageContext() retain];
@@ -89,7 +89,7 @@
 		UIImage *knobImageStretch = [knobTmpImage stretchableImageWithLeftCapWidth:knobTmpImage.size.width / 2.0
 																	  topCapHeight:0.0];
 		CGRect knobRect = CGRectMake(0, 0, knobWidth, [knobImageStretch size].height);
-		UIGraphicsBeginImageContext(knobRect.size);
+		UIGraphicsBeginImageContextWithOptions(knobRect.size, NO, [knobTmpImage scale]);
 		[knobImageStretch drawInRect:knobRect];
 		[knobImagePressed release];
 		knobImagePressed = [UIGraphicsGetImageFromCurrentImageContext() retain];
@@ -105,11 +105,11 @@
 - (void)regenerateImages
 {
 	CGRect boundsRect = self.bounds;
-	UIImage *sliderOnBase = [[UIImage imageNamed:@"btn_slider_on.png"] stretchableImageWithLeftCapWidth:10.0
+	UIImage *sliderOnBase = [[UIImage imageNamed:@"btn_slider_on.png"] stretchableImageWithLeftCapWidth:20.0
 																						   topCapHeight:0.0];
 	CGRect sliderOnRect = boundsRect;
 	sliderOnRect.size.height = [sliderOnBase size].height;
-	UIGraphicsBeginImageContext(sliderOnRect.size);
+	UIGraphicsBeginImageContextWithOptions(sliderOnRect.size, NO, [sliderOnBase scale]);
 	[sliderOnBase drawInRect:sliderOnRect];
 	[sliderOn release];
 	sliderOn = [UIGraphicsGetImageFromCurrentImageContext() retain];
@@ -136,7 +136,7 @@
 																		  topCapHeight:0.0];
 		CGRect sliderOnRect = boundsRect;
 		sliderOnRect.size.height = [buttonEndTrackBase size].height;
-		UIGraphicsBeginImageContext(sliderOnRect.size);
+		UIGraphicsBeginImageContextWithOptions(sliderOnRect.size, NO, [buttonTmpImage scale]);
 		[buttonEndTrackBase drawInRect:sliderOnRect];
 		[buttonEndTrack release];
 		buttonEndTrack = [UIGraphicsGetImageFromCurrentImageContext() retain];
@@ -149,7 +149,7 @@
 																		  topCapHeight:0.0];
 		CGRect sliderOnRect = boundsRect;
 		sliderOnRect.size.height = [buttonEndTrackBase size].height;
-		UIGraphicsBeginImageContext(sliderOnRect.size);
+		UIGraphicsBeginImageContextWithOptions(sliderOnRect.size, NO, [buttonTmpImage scale]);
 		[buttonEndTrackBase drawInRect:sliderOnRect];
 		[buttonEndTrackPressed release];
 		buttonEndTrackPressed = [UIGraphicsGetImageFromCurrentImageContext() retain];
@@ -166,6 +166,7 @@
 - (void)drawRect:(CGRect)rect
 {
 	CGRect boundsRect = self.bounds;
+    boundsRect.size.height = drawHeight;
 	if(!CGSizeEqualToSize(boundsRect.size, lastBoundsSize)){
 		[self regenerateImages];
 		lastBoundsSize = boundsRect.size;
@@ -197,7 +198,7 @@
 	{
 		CGContextSaveGState(context);
 		UIGraphicsPushContext(context);
-		
+
 		if(drawPercent == 0.0){
 			CGRect insetClipRect = boundsRect;
 			insetClipRect.origin.x += endcapWidth;
@@ -210,20 +211,21 @@
 			insetClipRect.size.width -= endcapWidth;
 			UIRectClip(insetClipRect);
 		}
-		
+
 		{
 			CGRect sliderOffRect = boundsRect;
 			sliderOffRect.size.height = [sliderOff size].height;
 			[sliderOff drawInRect:sliderOffRect];
 		}
-		
+
 		if(drawPercent > 0.0){		
-			float onWidth = 3 + (width - knobWidth + 3) * drawPercent;
-			CGRect drawOnRect = CGRectMake(0, 0, onWidth, [sliderOn size].height);
+            float scale = [sliderOn scale];
+			float onWidth = 3 + (width - knobWidth / 2) * drawPercent;
+			CGRect drawOnRect = CGRectMake(0, 0, onWidth * scale, [sliderOn size].height * scale);
 			CGImageRef sliderOnSubImage = CGImageCreateWithImageInRect([sliderOn CGImage], drawOnRect);
 			CGContextSaveGState(context);
-			CGContextScaleCTM(context, 1.0, -1.0);
-			CGContextTranslateCTM(context, 0.0, -boundsRect.size.height - 1.0);	
+			CGContextScaleCTM(context, 1.0 / scale, -1.0 / scale);
+			CGContextTranslateCTM(context, 0.0, -drawOnRect.size.height);	
 			CGContextDrawImage(context, drawOnRect, sliderOnSubImage);
 			CGContextRestoreGState(context);
 			CGImageRelease(sliderOnSubImage);
@@ -232,7 +234,7 @@
 		{
 			CGContextSaveGState(context);
 			UIGraphicsPushContext(context);
-			CGRect insetClipRect = CGRectInset(boundsRect, 4, 4);
+			CGRect insetClipRect = CGRectInset(boundsRect, 2, 2);
 			UIRectClip(insetClipRect);
 			[self drawUnderlayersInRect:rect
 							 withOffset:drawPercent * (boundsRect.size.width - knobWidth)
@@ -243,23 +245,25 @@
 		
 		{
 			CGContextScaleCTM(context, 1.0, -1.0);
-			CGContextTranslateCTM(context, 0.0, -boundsRect.size.height + 1.0);	
+			CGContextTranslateCTM(context, 0.0, -boundsRect.size.height);	
 			CGPoint location = boundsRect.origin;
 			CGRect drawOnRect = CGRectMake(location.x - 1 + roundf(drawPercent * (boundsRect.size.width - knobWidth + 2)),
-										   location.y, knobWidth, [knobImage size].height);
+										   location.y + 1.5, knobWidth, [knobImage size].height);
 			if(self.highlighted)
 				CGContextDrawImage(context, drawOnRect, [knobImagePressed CGImage]);
 			else
 				CGContextDrawImage(context, drawOnRect, [knobImage CGImage]);
 		}
+
 		UIGraphicsPopContext();
 		CGContextRestoreGState(context);
 	}
-	
+
 	if(drawPercent == 0.0 || drawPercent == 1.0){
+        float scale = [buttonEndTrack scale];
 		CGContextSaveGState(context);
-		CGContextScaleCTM(context, 1.0, -1.0);
-		CGContextTranslateCTM(context, 0.0, -boundsRect.size.height - 1.0);	
+		CGContextScaleCTM(context, 1.0 / scale, -1.0 / scale);
+		CGContextTranslateCTM(context, 0.0, -boundsRect.size.height * scale);	
 		
 		UIImage *buttonTrackDrawImage;
 		if(self.highlighted)
@@ -268,16 +272,20 @@
 			buttonTrackDrawImage = buttonEndTrack;
 		
 		if(drawPercent == 0.0){
-			CGRect drawOnRect = CGRectMake(0, 0, endcapWidth, [buttonTrackDrawImage size].height);
+			CGRect drawOnRect = CGRectMake(0, 0, endcapWidth * scale, [buttonTrackDrawImage size].height * scale);
 			CGImageRef buttonTrackSubImage = CGImageCreateWithImageInRect([buttonTrackDrawImage CGImage], drawOnRect);
-			CGContextDrawImage(context, drawOnRect, buttonTrackSubImage);
+            CGRect drawIntoRect = drawOnRect;
+            drawIntoRect.origin.y = 2;
+			CGContextDrawImage(context, drawIntoRect, buttonTrackSubImage);
 			CGImageRelease(buttonTrackSubImage);		
 		}
 		
 		if(drawPercent == 1.0){
-			CGRect drawOnRect = CGRectMake(boundsRect.size.width - endcapWidth, 0, endcapWidth, [buttonTrackDrawImage size].height);
+			CGRect drawOnRect = CGRectMake((boundsRect.size.width - endcapWidth) * scale, 0, endcapWidth * scale, [buttonTrackDrawImage size].height * scale);
 			CGImageRef buttonTrackSubImage = CGImageCreateWithImageInRect([buttonTrackDrawImage CGImage], drawOnRect);
-			CGContextDrawImage(context, drawOnRect, buttonTrackSubImage);
+            CGRect drawIntoRect = drawOnRect;
+            drawIntoRect.origin.y = 2;
+			CGContextDrawImage(context, drawIntoRect, buttonTrackSubImage);
 			CGImageRelease(buttonTrackSubImage);
 		}
 		

@@ -36,6 +36,7 @@
 	float percent, oldPercent;
 	float knobWidth;
 	float endcapWidth;
+    float drawHeight;
 	CGPoint startPoint;
 	
 	CGSize lastBoundsSize;
