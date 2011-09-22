@@ -1,0 +1,4 @@
+Thanks to:
+
+Mazen M. Abdel-Rahman for pointing out a memory leak with buttonEndTrack and buttonEndTrackPressed.
+Jan Willms for notifying me of a change in iOS 4.0 where the animation duration was lengthened on the OS-provided switch.

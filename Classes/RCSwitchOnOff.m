@@ -31,14 +31,13 @@
 	onText = [UILabel new];
 	onText.text = NSLocalizedString(@"ON", @"Switch localized string");
 	onText.textColor = [UIColor whiteColor];
-	onText.font = [UIFont boldSystemFontOfSize:16];
-	onText.shadowColor = [UIColor colorWithWhite:0.35 alpha:1.0];
-    onText.shadowOffset = CGSizeMake(0.0, -0.5);
+	onText.font = [UIFont boldSystemFontOfSize:17];
+	onText.shadowColor = [UIColor colorWithWhite:0.175 alpha:1.0];
 	
 	offText = [UILabel new];
 	offText.text = NSLocalizedString(@"OFF", @"Switch localized string");
 	offText.textColor = [UIColor grayColor];
-	offText.font = [UIFont boldSystemFontOfSize:16];	
+	offText.font = [UIFont boldSystemFontOfSize:17];	
 }
 
 - (void)dealloc
@@ -51,14 +50,14 @@
 - (void)drawUnderlayersInRect:(CGRect)aRect withOffset:(float)offset inTrackWidth:(float)trackWidth
 {
 	{
-		CGRect textRect = aRect;
+		CGRect textRect = [self bounds];
 		textRect.origin.x += 14.0 + (offset - trackWidth);
 		[onText drawTextInRect:textRect];	
 	}
 	
 	{
-		CGRect textRect = aRect;
-		textRect.origin.x += (offset + trackWidth) - 14;
+		CGRect textRect = [self bounds];
+		textRect.origin.x += (offset + trackWidth);
 		[offText drawTextInRect:textRect];
 	}	
 }

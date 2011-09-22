@@ -20,44 +20,16 @@
  THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import "RCSwitch.h"
 
-
-@interface RCSwitch : UIControl {
-	UIImage *knobImage;
-	UIImage *knobImagePressed;
+@interface RCSwitchClone : RCSwitch {
+	UILabel *onText;
+	UILabel *offText;
 	
-	UIImage *sliderOff;
-	UIImage *sliderOn;
+	UIImage *onImage;
+	UIImage *offImage;
 	
-	UIImage *buttonEndTrack;
-	UIImage *buttonEndTrackPressed;
-	
-	float percent, oldPercent;
-	float knobWidth;
-	float endcapWidth;
-	CGPoint startPoint;
-	float scale;
-    float drawHeight;
-	float animationDuration;
-	
-	CGSize lastBoundsSize;
-	
-	NSDate *endDate;
-	BOOL mustFlip;
+	BOOL useImage;
 }
-
-/* Common initialization method for initWithFrame: and initWithCoder: */
-- (void)initCommon;
-
-/* Override to regenerate anything you need when the view changes sizes */
-- (void)regenerateImages;
-
-/* Override to draw your own custom text or graphics in the track */
-- (void)drawUnderlayersInRect:(CGRect)aRect withOffset:(float)offset inTrackWidth:(float)trackWidth;
-@property(readwrite,assign) float knobWidth;
-
-- (void)setOn:(BOOL)aBool animated:(BOOL)animated;
-@property(readwrite,assign,getter=isOn) BOOL on;
 
 @end

@@ -20,6 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#import "RCSwitchOnOff.h"
 #import "RCSwitchViewController.h"
 
 @implementation RCSwitchViewController
@@ -58,6 +59,36 @@ THE SOFTWARE.
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 */
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return 20;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
+    NSArray *subviews = [[NSArray alloc] initWithArray:cell.contentView.subviews];
+    for (UIView *subview in subviews) {
+        [subview removeFromSuperview];
+    }
+    [subviews release];
+    
+    RCSwitchOnOff *theSwitch = [[RCSwitchOnOff alloc] initWithFrame:CGRectMake(220, 8, 94, 27)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(6, 8, 212, 27)];
+    label.text = @"hello asdfasdf as dfa sdf as dfa sdf a sfas df";
+    [cell.contentView addSubview:label];
+    [cell.contentView addSubview:theSwitch];
+    [label release];
+    [theSwitch release];
+    return cell;
+}
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
