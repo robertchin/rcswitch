@@ -21,6 +21,7 @@
 		991DA3D014279E4B00FFB852 /* btn_slider_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 991DA3CF14279E4B00FFB852 /* btn_slider_thumb@2x.png */; };
 		991DA3D214279E5000FFB852 /* btn_slider_track_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 991DA3D114279E5000FFB852 /* btn_slider_track_pressed@2x.png */; };
 		991DA3D414279E5500FFB852 /* btn_slider_track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 991DA3D314279E5500FFB852 /* btn_slider_track@2x.png */; };
+		9925598A142AE26D0061C68B /* btn_slider_thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 99255989142AE26D0061C68B /* btn_slider_thumb.png */; };
 		9959C64F114C5C6500842058 /* RCSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9959C64E114C5C6500842058 /* RCSwitch.m */; };
 		9959C9A1114C92BC00842058 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9959C9A0114C92BC00842058 /* QuartzCore.framework */; };
 		9959CB8F114D820200842058 /* RCSwitchOnOff.m in Sources */ = {isa = PBXBuildFile; fileRef = 9959CB8E114D820200842058 /* RCSwitchOnOff.m */; };
@@ -52,6 +53,7 @@
 		991DA3CF14279E4B00FFB852 /* btn_slider_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_slider_thumb@2x.png"; sourceTree = "<group>"; };
 		991DA3D114279E5000FFB852 /* btn_slider_track_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_slider_track_pressed@2x.png"; sourceTree = "<group>"; };
 		991DA3D314279E5500FFB852 /* btn_slider_track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_slider_track@2x.png"; sourceTree = "<group>"; };
+		99255989142AE26D0061C68B /* btn_slider_thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_slider_thumb.png; sourceTree = "<group>"; };
 		9959C64D114C5C6500842058 /* RCSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSwitch.h; sourceTree = "<group>"; };
 		9959C64E114C5C6500842058 /* RCSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCSwitch.m; sourceTree = "<group>"; };
 		9959C651114C5FCD00842058 /* btn_slider_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_slider_off.png; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				99F0C1D41427A06500EBF893 /* btn_slider_thumb_pressed.png */,
 				99F0C1D51427A06500EBF893 /* btn_slider_track_pressed.png */,
 				99F0C1D61427A06500EBF893 /* btn_slider_track.png */,
+				99255989142AE26D0061C68B /* btn_slider_thumb.png */,
 				2899E5210DE3E06400AC0155 /* RCSwitchViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* RCSwitch-Info.plist */,
@@ -237,6 +240,7 @@
 				99F0C1D91427A06500EBF893 /* btn_slider_thumb_pressed.png in Resources */,
 				99F0C1DA1427A06500EBF893 /* btn_slider_track_pressed.png in Resources */,
 				99F0C1DB1427A06500EBF893 /* btn_slider_track.png in Resources */,
+				9925598A142AE26D0061C68B /* btn_slider_thumb.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

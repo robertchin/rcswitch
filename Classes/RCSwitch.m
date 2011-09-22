@@ -220,7 +220,7 @@
 
 		if(drawPercent > 0.0){		
             float scale = [sliderOn scale];
-			float onWidth = 3 + (width - knobWidth / 2) * drawPercent;
+			float onWidth = knobWidth / 2 + ((width - knobWidth / 2) - knobWidth / 2) * drawPercent;
 			CGRect drawOnRect = CGRectMake(0, 0, onWidth * scale, [sliderOn size].height * scale);
 			CGImageRef sliderOnSubImage = CGImageCreateWithImageInRect([sliderOn CGImage], drawOnRect);
 			CGContextSaveGState(context);
@@ -244,11 +244,12 @@
 		}
 		
 		{
+            float scale = [knobImagePressed scale];
 			CGContextScaleCTM(context, 1.0, -1.0);
 			CGContextTranslateCTM(context, 0.0, -boundsRect.size.height);	
 			CGPoint location = boundsRect.origin;
 			CGRect drawOnRect = CGRectMake(location.x - 1 + roundf(drawPercent * (boundsRect.size.width - knobWidth + 2)),
-										   location.y + 1.5, knobWidth, [knobImage size].height);
+										   location.y + scale == 1.0 ? 1.0 : 1.5, knobWidth, [knobImage size].height);
 			if(self.highlighted)
 				CGContextDrawImage(context, drawOnRect, [knobImagePressed CGImage]);
 			else
@@ -275,7 +276,7 @@
 			CGRect drawOnRect = CGRectMake(0, 0, endcapWidth * scale, [buttonTrackDrawImage size].height * scale);
 			CGImageRef buttonTrackSubImage = CGImageCreateWithImageInRect([buttonTrackDrawImage CGImage], drawOnRect);
             CGRect drawIntoRect = drawOnRect;
-            drawIntoRect.origin.y = 2;
+            drawIntoRect.origin.y = 1 * scale;
 			CGContextDrawImage(context, drawIntoRect, buttonTrackSubImage);
 			CGImageRelease(buttonTrackSubImage);		
 		}
@@ -284,7 +285,7 @@
 			CGRect drawOnRect = CGRectMake((boundsRect.size.width - endcapWidth) * scale, 0, endcapWidth * scale, [buttonTrackDrawImage size].height * scale);
 			CGImageRef buttonTrackSubImage = CGImageCreateWithImageInRect([buttonTrackDrawImage CGImage], drawOnRect);
             CGRect drawIntoRect = drawOnRect;
-            drawIntoRect.origin.y = 2;
+            drawIntoRect.origin.y = 1 * scale;
 			CGContextDrawImage(context, drawIntoRect, buttonTrackSubImage);
 			CGImageRelease(buttonTrackSubImage);
 		}
