@@ -57,7 +57,7 @@
 	
 	{
 		CGRect textRect = [self bounds];
-		textRect.origin.x += (offset + trackWidth);
+		textRect.origin.x += (offset + trackWidth) - 14.0;
 		[offText drawTextInRect:textRect];
 	}	
 }

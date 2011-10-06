@@ -46,13 +46,14 @@
 		onText = [UILabel new];
 		onText.text = [[NSBundle bundleForClass:[UISwitch class]] localizedStringForKey:@"ON" value:nil table:nil];
 		onText.textColor = [UIColor whiteColor];
-		onText.font = [UIFont boldSystemFontOfSize:17];
-		onText.shadowColor = [UIColor colorWithWhite:0.175 alpha:1.0];
+		onText.font = [UIFont boldSystemFontOfSize:16];
+        onText.shadowOffset = CGSizeMake(0.0, -0.5);
+		onText.shadowColor = [UIColor colorWithWhite:0.2 alpha:0.5];
 		
 		offText = [UILabel new];
 		offText.text = [[NSBundle bundleForClass:[UISwitch class]] localizedStringForKey:@"OFF" value:nil table:nil];
-		offText.textColor = [UIColor grayColor];
-		offText.font = [UIFont boldSystemFontOfSize:17];
+		offText.textColor = [UIColor colorWithWhite:0.2 alpha:0.5];
+		offText.font = [UIFont boldSystemFontOfSize:16];
 	}
 }
 
@@ -77,7 +78,7 @@
 		}
 		{
 			CGPoint imagePoint = [self bounds].origin;
-			imagePoint.x += 10.0 + (offset + trackWidth);
+			imagePoint.x += -6 + (offset + trackWidth);
 			imagePoint.y += 6.0;			
 			[offImage drawAtPoint:imagePoint];			
 		}
@@ -90,7 +91,7 @@
 		
 		{
 			CGRect textRect = [self bounds];
-			textRect.origin.x += (offset + trackWidth);
+			textRect.origin.x += -14 + (offset + trackWidth);
 			[offText drawTextInRect:textRect];
 		}
 	}
