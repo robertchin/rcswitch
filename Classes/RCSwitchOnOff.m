@@ -40,13 +40,6 @@
 	offText.font = [UIFont boldSystemFontOfSize:17];	
 }
 
-- (void)dealloc
-{
-	[onText release];
-	[offText release];
-	[super dealloc];
-}
-
 - (void)drawUnderlayersInRect:(CGRect)aRect withOffset:(float)offset inTrackWidth:(float)trackWidth
 {
 	{
